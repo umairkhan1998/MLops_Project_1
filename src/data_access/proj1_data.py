@@ -27,6 +27,7 @@ class Proj1Data:
 
         Parameters:
         ----------
+        self : Used to refer instance of a class 
         collection_name : str
             The name of the MongoDB collection to export.
         database_name : Optional[str]
@@ -48,9 +49,9 @@ class Proj1Data:
             print("Fetching data from mongoDB")
             df = pd.DataFrame(list(collection.find()))
             print(f"Data fecthed with len: {len(df)}")
-            if "id" in df.columns.to_list():
-                df = df.drop(columns=["id"], axis=1)
-            df.replace({"na":np.nan},inplace=True)
+            if "_id" in df.columns.to_list():  # Mongodb adds _id by default, so we are droping it
+                df = df.drop(columns=["_id"], axis=1)
+            df.replace({"na":np.nan},inplace=True) # replacing the na string with Null values
             return df
 
         except Exception as e:
